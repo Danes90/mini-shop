@@ -6,6 +6,11 @@ use PHPUnit\Framework\TestCase;
 
 class AuthServiceTest extends TestCase
 {
+    /**
+     * Summary of testPasswordGetsHashed
+     * @test
+     * @return void
+     */
     public function testPasswordGetsHashed()
     {
         $password = '123456';

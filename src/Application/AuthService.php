@@ -1,4 +1,6 @@
 <?php
+namespace App\Application;
+
 use App\Domain\User\UserRepository;
 use App\Infrastructure\Session\SessionManager;
 
@@ -15,6 +17,25 @@ class AuthService
         $this->session = $session;
     }
 
+    /**
+     * Summary of register
+     * @param string $email
+     * @param string $password
+     * @return void
+     */
+    public function register(string $email, string $password): void
+    {
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        $this->repository->save([
+            'email' => $email,
+            'password' => $hashedPassword
+        ]);
+    }
+
+    /**
+     * user login
+     */
     public function login(string $email, string $password): bool
     {
         $user = $this->repository->findByEmail($email);
@@ -31,3 +52,4 @@ class AuthService
 
         return true;
     }
+}

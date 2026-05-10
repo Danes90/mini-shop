@@ -4,26 +4,10 @@ session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Application\OrderService;
-use App\Http\Controller\OrderController;
-use App\Http\Middleware\AuthMiddleware;
-use App\Infrastructure\Database\Connection;
-use App\Infrastructure\Persistence\MySQLOrderRepository;
+$container = require __DIR__ . '/../bootstrap/container.php';
 
-$_SESSION['user'] = 2;
+$auth = $container->get(\App\Application\AuthService::class);
 
-$pdo = Connection::make();
+$auth->register('test@test.com', '123456');
 
-$orderRepository = new MySQLOrderRepository($pdo);
-
-$orderService = new OrderService($orderRepository);
-
-$orderController = new OrderController($orderService);
-
-$middleware = new AuthMiddleware();
-
-$middleware->handle(function () use ($orderController) {
-
-    $orderController->store();
-
-});
+echo "done";

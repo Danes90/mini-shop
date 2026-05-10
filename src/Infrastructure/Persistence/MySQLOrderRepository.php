@@ -14,6 +14,11 @@ class MySQLOrderRepository implements OrderRepository{
         $this->pdo = $pdo;
     }
 
+    /**
+     * Summary of save
+     * @param array $order
+     * @return void
+     */
     public function save(array $order): void
     {
         $stmt = $this->pdo->prepare(

@@ -12,10 +12,13 @@ class OrderController
         $this->service = $service;
     }
 
+    /**
+     * Summary of store
+     * @return void
+     */
     public function store(): void
     {
         $this->service->create(100);
-
         echo "Order created!";
     }
 }

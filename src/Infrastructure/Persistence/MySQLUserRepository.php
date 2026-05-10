@@ -13,6 +13,11 @@ class MySQLUserRepository implements UserRepository
         $this->pdo = $pdo;
     }
 
+    /**
+     * Summary of save
+     * @param array $user
+     * @return void
+     */
     public function save(array $user): void
     {
         $stmt = $this->pdo->prepare(
@@ -26,6 +31,10 @@ class MySQLUserRepository implements UserRepository
         ]);
     }
 
+    /**
+     * Summary of findByEmail
+     * @param string $email
+     */
     public function findByEmail(string $email): ?array
     {
         $stmt = $this->pdo->prepare(
@@ -37,7 +46,6 @@ class MySQLUserRepository implements UserRepository
         $stmt->execute([
             'email' => $email
         ]);
-
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $user ?: null;

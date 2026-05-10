@@ -18,6 +18,12 @@ class OrderService
         $this->session = $session;
     }
 
+    /**
+     * 
+     * order create
+     * @param float $price
+     * @return void
+     */
     public function create(float $price): void
     {
         $this->repository->save([
