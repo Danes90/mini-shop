@@ -15,7 +15,7 @@ class MySQLOrderRepository implements OrderRepository{
     }
 
     /**
-     * Summary of save
+     * save user
      * @param array $order
      * @return void
      */

@@ -15,7 +15,7 @@ class AuthMiddleware
     public function handle(callable $next)
     {
         if (!$this->session->has('user')) {
-            die('Unauthorized');
+           throw new \Exception('Unauthorized');
         }
 
         return $next();

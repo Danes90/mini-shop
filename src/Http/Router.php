@@ -6,42 +6,46 @@ class Router
 {
     private array $routes = [];
 
-    /**
-     * post route
-     * @param string $path
-     * @param callable $handler
-     * @return void
-     */
-    public function post(string $path, callable $handler): void
-    {
-        $this->routes['POST'][$path] = $handler;
-    }
-
-    /**
-     * get route
-     * @param string $path
-     * @param callable $handler
-     * @return void
-     */
     public function get(string $path, callable $handler): void
     {
-        $this->routes['GET'][$path] = $handler;
+        $this->routes['GET'][] = [
+            'path' => $path,
+            'handler' => $handler
+        ];
     }
 
-    /**
-     * dispatch
-     * @param string $method
-     * @param string $path
-     */
-    public function dispatch(string $method, string $path)
+    public function post(string $path, callable $handler): void
     {
-        $handler = $this->routes[$method][$path] ?? null;
+        $this->routes['POST'][] = [
+            'path' => $path,
+            'handler' => $handler
+        ];
+    }
 
-        if (!$handler) {
-            http_response_code(404);
-            return "Not Found";
+    public function dispatch(string $method, string $uri)
+    {
+        $uri = parse_url($uri, PHP_URL_PATH);
+
+        foreach ($this->routes[$method] ?? [] as $route) {
+
+            $pattern = $this->convertPathToRegex($route['path']);
+
+            if (preg_match($pattern, $uri, $matches)) {
+
+                array_shift($matches); // első full match eltávolítása
+
+                return call_user_func_array($route['handler'], $matches);
+            }
         }
 
-        return $handler();
+        http_response_code(404);
+        return "Not Found";
+    }
+
+    private function convertPathToRegex(string $path): string
+    {
+        $pattern = preg_replace('#\{(\w+)\}#', '([^/]+)', $path);
+
+        return "#^" . $pattern . "$#";
     }
 }

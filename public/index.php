@@ -1,5 +1,17 @@
 <?php
 
+set_exception_handler(function (Throwable $e) {
+
+    http_response_code(500);
+
+    header('Content-Type: application/json');
+
+    echo json_encode([
+        'status' => 'error',
+        'message' => $e->getMessage()
+    ]);
+});
+
 session_start();
 require __DIR__ . '/../vendor/autoload.php';
 
