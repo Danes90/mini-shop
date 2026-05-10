@@ -23,24 +23,30 @@ class Router
     }
 
     public function dispatch(string $method, string $uri)
-    {
-        $uri = parse_url($uri, PHP_URL_PATH);
+{
+    $uri = parse_url($uri, PHP_URL_PATH);
 
-        foreach ($this->routes[$method] ?? [] as $route) {
+    foreach ($this->routes[$method] ?? [] as $route) {
 
-            $pattern = $this->convertPathToRegex($route['path']);
+        $pattern = $this->convertPathToRegex($route['path']);
 
-            if (preg_match($pattern, $uri, $matches)) {
+        if (preg_match($pattern, $uri, $matches)) {
 
-                array_shift($matches); // első full match eltávolítása
+            array_shift($matches);
 
-                return call_user_func_array($route['handler'], $matches);
-            }
+            $request = new \App\Http\Request($matches);
+
+            [$class, $method] = $route['handler'];
+
+            $controller = new $class();
+
+            return $controller->$method($request);
         }
-
-        http_response_code(404);
-        return "Not Found";
     }
+
+    http_response_code(404);
+    return "Not Found";
+}
 
     private function convertPathToRegex(string $path): string
     {
