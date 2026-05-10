@@ -18,7 +18,7 @@ class AuthService
     }
 
     /**
-     * Summary of register
+     * register user
      * @param string $email
      * @param string $password
      * @return void

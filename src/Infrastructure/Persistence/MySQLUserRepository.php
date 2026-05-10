@@ -14,7 +14,7 @@ class MySQLUserRepository implements UserRepository
     }
 
     /**
-     * Summary of save
+     * save user
      * @param array $user
      * @return void
      */
@@ -32,7 +32,7 @@ class MySQLUserRepository implements UserRepository
     }
 
     /**
-     * Summary of findByEmail
+     * find user
      * @param string $email
      */
     public function findByEmail(string $email): ?array

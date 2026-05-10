@@ -5,7 +5,7 @@ namespace App\Infrastructure\Session;
 class SessionManager
 {
     /**
-     * Summary of set
+     * set session key with value
      * @param string $key
      * @param mixed $value
      * @return void
@@ -16,7 +16,7 @@ class SessionManager
     }
 
     /**
-     * Summary of get
+     * get session value by key
      * @param string $key
      * @return mixed
      */
@@ -26,7 +26,7 @@ class SessionManager
     }
 
     /**
-     * Summary of has
+     * session key check
      * @param string $key
      * @return bool
      */
@@ -36,7 +36,7 @@ class SessionManager
     }
 
     /**
-     * Summary of destroy
+     * destron session
      * @return void
      */
     public function destroy(): void

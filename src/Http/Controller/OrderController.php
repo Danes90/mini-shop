@@ -13,7 +13,7 @@ class OrderController
     }
 
     /**
-     * Summary of store
+     * store order
      * @return void
      */
     public function store(): void
