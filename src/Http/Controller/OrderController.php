@@ -4,6 +4,7 @@ namespace App\Http\Controller;
 
 use App\Http\Request;
 use App\Application\OrderService;
+use App\Http\Controller;
 
 class OrderController extends Controller
 {
@@ -11,7 +12,6 @@ class OrderController extends Controller
 
     public function __construct()
     {
-        // most még kézzel, később container fogja
         $this->orderService = new OrderService(
             new \App\Infrastructure\Persistence\MySQLOrderRepository(
                 new \PDO('mysql:host=localhost;dbname=test', 'root', '')
