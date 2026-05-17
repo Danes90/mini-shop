@@ -18,7 +18,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $container = require __DIR__ . '/../bootstrap/container.php';
 
 use App\Http\Router;
-$router = new Router();
+$router = new Router($container);
 
 /**
  * =========================

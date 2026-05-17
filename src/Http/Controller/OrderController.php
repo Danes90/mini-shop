@@ -2,29 +2,24 @@
 
 namespace App\Http\Controller;
 
-use App\Http\Request;
 use App\Application\OrderService;
+use App\Http\Request;
 use App\Http\Controller;
 
 class OrderController extends Controller
 {
-    private OrderService $orderService;
+    private OrderService $service;
 
-    public function __construct()
+    public function __construct(OrderService $service)
     {
-        $this->orderService = new OrderService(
-            new \App\Infrastructure\Persistence\MySQLOrderRepository(
-                new \PDO('mysql:host=localhost;dbname=test', 'root', '')
-            ),
-            new \App\Infrastructure\Session\SessionManager()
-        );
+        $this->service = $service;
     }
 
     public function store(Request $request)
     {
         $data = $request->body();
 
-        $this->orderService->create($data['price']);
+        $this->service->create($data['price']);
 
         return $this->json([
             'status' => 'success',
